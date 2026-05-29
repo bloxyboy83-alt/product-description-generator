@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Description Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f0f14;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #1a1a22;
+      padding: 25px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #ff4fd8;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff2fc8;
+    }
+
+    .output {
+      margin-top: 15px;
+      padding: 10px;
+      background: #111;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>🛍️ Description Generator</h2>
+
+  <input id="name" placeholder="Product name">
+  <input id="vibe" placeholder="Vibe (cute, dreamy, luxury...)">
+  <textarea id="features" placeholder="Features (comma separated)"></textarea>
+
+  <button onclick="generate()">Generate</button>
+
+  <div class="output" id="output"></div>
+</div>
+
+<script>
+function generate() {
+  let name = document.getElementById("name").value;
+  let vibe = document.getElementById("vibe").value;
+  let features = document.getElementById("features").value;
+
+  let result =
+`✨ ${name} ✨
+
+A ${vibe} piece designed to stand out and feel special.
+
+Features include: ${features}.
+
+Perfect for collectors, aesthetic lovers, and anyone who wants something that feels a little magical in their everyday life.`;
+
+  document.getElementById("output").innerText = result;
+}
+</script>
+
+</body>
+</html>
