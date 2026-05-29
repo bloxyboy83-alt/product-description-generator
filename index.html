@@ -5,6 +5,21 @@
   <title>Mika — Shop Assistant</title>
 
   <style>
+   button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px;
+  background: #ff4fd8;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ff2fc8;
+}
     body {
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #0f0f14, #1a1a2e);
@@ -95,7 +110,18 @@
   <div class="chatbox" id="output">Mika is waiting for your product idea...</div>
 </div>
 
-<script>
+let lastOutput = {
+  title: "",
+  description: "",
+  features: "",
+  tags: "",
+  full: ""
+};
+
+function copyText(text) {
+  navigator.clipboard.writeText(text);
+}
+
 function mikaGenerate() {
   let name = document.getElementById("name").value;
   let vibe = document.getElementById("vibe").value;
@@ -107,21 +133,25 @@ function mikaGenerate() {
     return;
   }
 
-  // Convert features into bullet points
   let featureList = features.split(",").map(f => `• ${f.trim()}`).join("\n");
 
   let title = `${name} | ${vibe} aesthetic collectible`;
 
   let description =
-`✨ PRODUCT DESCRIPTION ✨
+`✨ ${name} ✨
 
-${name} is a ${vibe} collectible designed for aesthetic lovers and dedicated collectors.
+A ${vibe} collectible designed for aesthetic lovers and dedicated collectors.
 
-Every detail is crafted to feel special, expressive, and visually captivating.
+Every detail is crafted to feel special, expressive, and visually captivating.`;
 
-`;
+  let tags = `#${vibe.replace(/\s/g, '')} #aesthetic #collectible #shopitem #cutedesign`;
 
-  let fullOutput =
+  lastOutput.title = title;
+  lastOutput.description = description;
+  lastOutput.features = featureList;
+  lastOutput.tags = tags;
+
+  lastOutput.full =
 `🏷️ TITLE:
 ${title}
 
@@ -132,10 +162,17 @@ ${description}
 ${featureList}
 
 🏷️ TAGS:
-#${vibe.replace(/\s/g, '')} #aesthetic #collectible #shopitem #cutedesign
+${tags}`;
 
-💡 Mika’s Note:
-This listing is optimized for shop visibility and aesthetic appeal ✨`;
+  document.getElementById("output").innerHTML = `
+    <div style="white-space: pre-wrap;">${lastOutput.full}</div>
 
-  document.getElementById("output").innerText = fullOutput;
+    <br>
+
+    <button onclick="copyText(lastOutput.title)">📋 Copy Title</button>
+    <button onclick="copyText(lastOutput.description)">📋 Copy Description</button>
+    <button onclick="copyText(lastOutput.features)">📋 Copy Features</button>
+    <button onclick="copyText(lastOutput.tags)">📋 Copy Tags</button>
+    <button onclick="copyText(lastOutput.full)">📋 Copy Everything</button>
+  `;
 }
